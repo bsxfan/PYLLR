@@ -1,6 +1,6 @@
 
 import numpy as np
-from scipy import special
+from scipy.special import erfinv, expit
 
 sqrt2 = np.sqrt(2)
 
@@ -31,4 +31,42 @@ def scoreslabels_2_tarnon(scores,labels):
     return tar, non    
 
 def probit(p):
-    return sqrt2*special.erfinv(2.0*p - 1.0)
+    return sqrt2*erfinv(2.0*p - 1.0)
+
+def cs_sigmoid(x):
+    """numerically stable and complex-step-friendly version of sigmoid"""
+    if not np.iscomplexobj(x): return expit(x)
+    rx = np.real(x)
+    p, q = expit(rx), expit(-rx)
+    return p + 1.0j*p*q*np.imag(x)
+
+def sigmoid(x,deriv=False):
+    p = cs_sigmoid(x)
+    if not deriv: return p
+    
+    q = cs_sigmoid(-x)
+    def back(dp): return dp*p*q
+    return p, back
+    
+    
+
+def cs_softplus(x):
+    """numerically stable and complex-step-friendly version of: 
+       
+       softplus = log( 1 + exp(x) )
+    """
+    if not np.iscomplexobj(x): 
+        return np.log1p(np.exp(-np.abs(x))) + np.maximum(x, 0)
+    #return np.log( 1 + np.exp(x) )
+    rx = np.real(x)
+    y = cs_softplus(rx)
+    return y + 1.0j*expit(rx)*np.imag(x)
+
+
+def softplus(x, deriv=False):
+    y = cs_softplus(x)
+    if not deriv: return y
+    
+    dydx = cs_sigmoid(x)
+    def back(dy): return dy*dydx
+    return y, back 

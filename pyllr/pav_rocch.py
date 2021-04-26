@@ -20,7 +20,6 @@ from scipy.special import expit as sigmoid
 from scipy.special import logit
 from scipy.optimize import minimize_scalar
 
-from .utils import tarnon_2_scoreslabels
 
 class PAV:
     """
@@ -52,7 +51,7 @@ class PAV:
         ii = np.lexsort((-labels,scores))  # when scores are equal, those with 
                                            # label 1 are considered inferior
         weights = np.ones_like(scores, dtype=np.float64)
-        y = np.empty_like(scores,dtype=np.float64)
+        y = np.empty_like(scores, dtype=np.float64)
         y[:] = labels[ii]
         fastpav(y,weights)
 
@@ -208,10 +207,3 @@ class ROCCH:
 
 
 
-def tarnon_2_eer(tar,non):
-    pav = PAV(*tarnon_2_scoreslabels(tar,non))
-    return ROCCH(pav).EER()
-    
-def scores_labels_2_eer(scores,labels):
-    pav = PAV(scores,labels)
-    return ROCCH(pav).EER()
