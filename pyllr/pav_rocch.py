@@ -145,6 +145,25 @@ class ROCCH:
         ROCCH(PAV(scores,labels)) constructs an object of this class.
         """    
         self.PmissPfa = pava.rocch(True)
+        
+        
+        
+    def AUC(self):
+        """
+        AUC = Area Under Curve (i.e. the ROCCH curve). This can be interpreted
+        as an error-rate. It is the probability that a randomly selected 
+        target score exceeds a randomly selected non-target score.
+        """
+        pmiss = self.PmissPfa[0,:]     # increasing
+        pfa = self.PmissPfa[1,:]       # decreasing
+        n = len(pmiss)-1               # number of segments
+        sum = 0.0
+        for i in range(n):
+            delta_x = pfa[i] - pfa[i+1]
+            avg_y = (pmiss[i] + pmiss[i+1]) / 2
+            sum += delta_x * avg_y
+        return sum    
+            
 
     def Pmiss_Pfa(self):
         """

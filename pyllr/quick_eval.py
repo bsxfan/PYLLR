@@ -101,6 +101,7 @@ def tarnon_2_eer(tar,non):
     pav = PAV(*tarnon_2_scoreslabels(tar,non))
     return ROCCH(pav).EER()
 
+
     
 def scoreslabels_2_eer(scores,labels):
     """
@@ -123,3 +124,18 @@ def scoreslabels_2_eer(scores,labels):
     """
     pav = PAV(scores,labels)
     return ROCCH(pav).EER()
+
+
+
+
+def tarnon_2_auc(tar,non):
+    pav = PAV(*tarnon_2_scoreslabels(tar,non))
+    return ROCCH(pav).AUC()
+
+def tarnon_2_eer_auc(tar,non):
+    pav = PAV(*tarnon_2_scoreslabels(tar,non))
+    rocch = ROCCH(pav)
+    return rocch.EER(), rocch.AUC()
+
+
+
