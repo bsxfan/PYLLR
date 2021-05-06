@@ -1,6 +1,6 @@
 
 import numpy as np
-from scipy.special import erfinv, expit
+from scipy.special import erf, erfinv, expit
 
 sqrt2 = np.sqrt(2)
 
@@ -32,6 +32,9 @@ def scoreslabels_2_tarnon(scores,labels):
 
 def probit(p):
     return sqrt2*erfinv(2.0*p - 1.0)
+
+def probitinv(x):
+    return (1.0 + erf(x/sqrt2) ) / 2.0
 
 def cs_sigmoid(x):
     """numerically stable and complex-step-friendly version of sigmoid"""

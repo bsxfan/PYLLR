@@ -1,6 +1,7 @@
+import numpy as np
 from pyllr.pav_rocch import PAV, ROCCH
 from pyllr.cllr import cllr, min_cllr
-from pyllr.utils import tarnon_2_scoreslabels, scoreslabels_2_tarnon
+from pyllr.utils import tarnon_2_scoreslabels, scoreslabels_2_tarnon, probit, probitinv
 
 def scoreslabels_2_eer_cllr_mincllr(scores, labels):
     """
@@ -137,5 +138,14 @@ def tarnon_2_eer_auc(tar,non):
     rocch = ROCCH(pav)
     return rocch.EER(), rocch.AUC()
 
+def eer_2_auc_approx(eer):
+    """
+    The relationship between EER and AUC is not an exact function, because 
+    AUC depends on details of the score distributions, other than the EER.
+    This function gives a good approximation to AUC when the scores are 
+    approximately Gaussian and when targets and non-targets have approximately
+    equal variances.
+    """
+    return probitinv(np.sqrt(2)*probit(eer))
 
 
