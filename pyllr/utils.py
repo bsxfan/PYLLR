@@ -36,6 +36,10 @@ def probit(p):
 def probitinv(x):
     return (1.0 + erf(x/sqrt2) ) / 2.0
 
+
+def eer_2_dprime(eer):
+    return -2*probit(eer)
+
 def cs_sigmoid(x):
     """numerically stable and complex-step-friendly version of sigmoid"""
     if not np.iscomplexobj(x): return expit(x)
