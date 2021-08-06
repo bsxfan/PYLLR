@@ -19,3 +19,10 @@ We have incluced in the examples directory, some code that reproduces the plots 
 > Niko Brümmer, Luciana Ferrer and Albert Swart, "Out of a hundred trials, how many errors does your speaker verifier make?", 2011, https://arxiv.org/abs/2104.00732. 
 
 For instructions, go to the [readme](https://github.com/bsxfan/PYLLR/blob/main/examples/interspeech2021/README.txt).
+
+## Install
+
+Install using `pip`, directly from this github repository:
+```sh
+pip install git+https://github.com/bsxfan/PYLLR.git
+```
