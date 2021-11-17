@@ -35,28 +35,29 @@ def make_berplot(sys):
     plt.savefig(f"{sys}_ber.pdf")
 
 
-# Figure 1.  Plot the Trapezium Bound
+if __name__ == "__main__":
 
-data = np.load("scores/dca_plda/voxceleb2.npz")
-tar, non = data["tar"], data["non"]
-tar, non = tar.astype('float'), non.astype('float')
+    # Figure 1.  Plot the Trapezium Bound
+    data = np.load("scores/dca_plda/voxceleb2.npz")
+    tar, non = data["tar"], data["non"]
+    tar, non = tar.astype('float'), non.astype('float')
 
-scores, labels = tarnon_2_scoreslabels(tar,non)
-plo = np.linspace(-15,15,201)
-fig, ax = plt.subplots()
-ber = BayesErrorPlot(ax,plo,'Trapezium bound')
-ber.add_pav(scores,labels,"g",plotlabel=r"$\hat P_e$")
-eer = ber.rocch.EER()
-ax.plot([plo[0],plo[-1]],[eer,eer],"r",label="EER")
-ber.legend()
-plt.savefig("trapezium.pdf")
+    scores, labels = tarnon_2_scoreslabels(tar,non)
+    plo = np.linspace(-15,15,201)
+    fig, ax = plt.subplots()
+    ber = BayesErrorPlot(ax,plo,'Trapezium bound')
+    ber.add_pav(scores,labels,"g",plotlabel=r"$\hat P_e$")
+    eer = ber.rocch.EER()
+    ax.plot([plo[0],plo[-1]],[eer,eer],"r",label="EER")
+    ber.legend()
+    plt.savefig("trapezium.pdf")
 
-# Figure 2.  Bayes Error Rate plot for the PLDA system
-make_berplot("plda")
+    # Figure 2.  Bayes Error Rate plot for the PLDA system
+    make_berplot("plda")
 
-# Figure 3.  Bayes Error Rate plot for the DCA-PLDA system
-make_berplot("dca_plda")
+    # Figure 3.  Bayes Error Rate plot for the DCA-PLDA system
+    make_berplot("dca_plda")
 
 
 
-plt.show()
+    plt.show()
