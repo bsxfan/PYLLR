@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from pyllr.plotting import  BayesErrorPlot
-from pyllr.pav_rocch import scores_labels_2_eer
+from pyllr.quick_eval import scoreslabels_2_eer
 from pyllr.utils import tarnon_2_scoreslabels
 
 
@@ -25,12 +25,12 @@ def make_berplot(sys):
         tar, non = tar.astype('float'), non.astype('float')
 
         scores, labels = tarnon_2_scoreslabels(tar,non)
-        eer = scores_labels_2_eer(scores,labels)
+        eer = scoreslabels_2_eer(scores,labels)
 
         ber.add(scores,labels,f"{plotcolor}-",plotlabel=plotlabel)
         ax.plot([plo[0],plo[-1]],[eer,eer],f"{plotcolor}:",label=f"{plotlabel} EER")
 
-    
+
     ber.legend()
     plt.savefig(f"{sys}_ber.pdf")
 
