@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.0.1' 
+VERSION = '0.0.2' 
 DESCRIPTION = 'Python package for log-likelihood-ratio'
 LONG_DESCRIPTION = 'Python package for log-likelihood-ratio'
 
